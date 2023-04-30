@@ -154,6 +154,10 @@ app.delete('/api/delete:id', function(req, res){
             // parse id
             var id = parseInt(req.params.id.substring(1));
             
+            // check if there is object with given id. if not, return status code 404
+            var song = await Songs.find({_id:id});
+            if(song.length == 0){res.status(404);res.send();return;}
+            
             // remove object
             await Songs.deleteOne({_id:id},{});
 
